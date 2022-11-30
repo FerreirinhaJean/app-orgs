@@ -8,6 +8,7 @@ import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.model.Produto
+import com.google.android.material.textfield.TextInputLayout
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -25,9 +26,9 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun configuraBotaoSalvar() {
-        val etNomeProduto = binding.etNomeProduto
-        val etDescricaoProduto = binding.etDescricaoProduto
-        val etPrecoProduto = binding.etPrecoProduto
+        val etNomeProduto = binding.activityFormularioProdutoNome
+        val etDescricaoProduto = binding.activityFormularioProdutoDescricao
+        val etPrecoProduto = binding.activityFormularioProdutoPreco
         val btSalvar = binding.btSalvar
 
         btSalvar.setOnClickListener {
@@ -38,13 +39,13 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun criaProduto(
-        etNomeProduto: EditText,
-        etDescricaoProduto: EditText,
-        etPrecoProduto: EditText
+        etNomeProduto: TextInputLayout,
+        etDescricaoProduto: TextInputLayout,
+        etPrecoProduto: TextInputLayout
     ): Produto {
-        val nome = etNomeProduto.text.toString()
-        val descricao = etDescricaoProduto.text.toString()
-        val preco = etPrecoProduto.text.toString()
+        val nome = etNomeProduto.editText?.text.toString()
+        val descricao = etDescricaoProduto.editText?.text.toString()
+        val preco = etPrecoProduto.editText?.text.toString()
 
         val valor = if (preco.isBlank())
             BigDecimal.ZERO
