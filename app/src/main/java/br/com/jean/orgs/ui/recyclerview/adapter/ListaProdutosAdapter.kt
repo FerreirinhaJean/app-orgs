@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.R
+import br.com.jean.orgs.databinding.ActivityMainBinding
+import br.com.jean.orgs.databinding.ProdutoItemBinding
 import br.com.jean.orgs.model.Produto
 
 class ListaProdutosAdapter(
@@ -17,10 +19,8 @@ class ListaProdutosAdapter(
     private val produtos = produtos.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val inflater = LayoutInflater.from(context)
-        val view = inflater.inflate(R.layout.produto_item, parent, false)
-
-        return MyViewHolder(view)
+        val binding = ProdutoItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        return MyViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -39,12 +39,12 @@ class ListaProdutosAdapter(
     }
 
     class MyViewHolder(
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
+        binding: ProdutoItemBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
 
-        val nomeProduto = itemView.findViewById<TextView>(R.id.tvNomeProduto)
-        val descricaoProduto = itemView.findViewById<TextView>(R.id.tvDescricaoProduto)
-        val precoProduto = itemView.findViewById<TextView>(R.id.tvPrecoProduto)
+        val nomeProduto = binding.tvNomeProduto
+        val descricaoProduto = binding.tvDescricaoProduto
+        val precoProduto = binding.tvPrecoProduto
 
         fun vincula(produto: Produto) {
             nomeProduto.text = produto.nome

@@ -6,24 +6,29 @@ import android.widget.Button
 import android.widget.EditText
 import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
+import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.model.Produto
 import java.math.BigDecimal
 
-class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario_produto) {
+class FormularioProdutoActivity : AppCompatActivity() {
 
+    private val binding by lazy {
+        ActivityFormularioProdutoBinding.inflate(layoutInflater)
+    }
     private val dao = ProdutoDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         configuraBotaoSalvar()
+        setContentView(binding.root)
     }
 
     private fun configuraBotaoSalvar() {
-        val etNomeProduto = findViewById<EditText>(R.id.etNomeProduto)
-        val etDescricaoProduto = findViewById<EditText>(R.id.etDescricaoProduto)
-        val etPrecoProduto = findViewById<EditText>(R.id.etPrecoProduto)
-        val btSalvar = findViewById<Button>(R.id.btSalvar)
+        val etNomeProduto = binding.etNomeProduto
+        val etDescricaoProduto = binding.etDescricaoProduto
+        val etPrecoProduto = binding.etPrecoProduto
+        val btSalvar = binding.btSalvar
 
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
