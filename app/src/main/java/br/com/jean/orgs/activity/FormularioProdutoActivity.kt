@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import br.com.jean.orgs.R
+import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.model.Produto
 import java.math.BigDecimal
 
@@ -34,7 +35,8 @@ class FormularioProdutoActivity : AppCompatActivity(R.layout.activity_formulario
                 valor = valor
             )
 
-
+            ProdutoDao().adicionar(produto)
+            finish()
         }
 
 
