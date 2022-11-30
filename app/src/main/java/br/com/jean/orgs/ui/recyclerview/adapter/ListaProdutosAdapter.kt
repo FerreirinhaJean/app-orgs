@@ -10,6 +10,9 @@ import br.com.jean.orgs.R
 import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.databinding.ProdutoItemBinding
 import br.com.jean.orgs.model.Produto
+import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.*
 
 class ListaProdutosAdapter(
     produtos: List<Produto>,
@@ -49,7 +52,12 @@ class ListaProdutosAdapter(
         fun vincula(produto: Produto) {
             nomeProduto.text = produto.nome
             descricaoProduto.text = produto.descricao
-            precoProduto.text = produto.valor.toPlainString()
+            precoProduto.text = formataValorBr(produto.valor)
+        }
+
+        private fun formataValorBr(valor: BigDecimal): String? {
+            val format = NumberFormat.getCurrencyInstance(Locale("pt", "br"))
+            return format.format(valor)
         }
 
     }
