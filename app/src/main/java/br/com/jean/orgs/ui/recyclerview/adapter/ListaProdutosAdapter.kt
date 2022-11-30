@@ -5,15 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.view.menu.MenuView.ItemView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.R
 import br.com.jean.orgs.model.Produto
 
 class ListaProdutosAdapter(
-    private val produtos: List<Produto>,
+    produtos: List<Produto>,
     private val context: Context
 ) : RecyclerView.Adapter<ListaProdutosAdapter.MyViewHolder>() {
+
+    private val produtos = produtos.toMutableList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -29,6 +30,12 @@ class ListaProdutosAdapter(
 
     override fun getItemCount(): Int {
         return produtos.size
+    }
+
+    fun atualiza(produtos: List<Produto>) {
+        this.produtos.clear()
+        this.produtos.addAll(produtos)
+        notifyDataSetChanged()
     }
 
     class MyViewHolder(
