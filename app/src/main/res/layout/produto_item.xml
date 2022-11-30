@@ -10,42 +10,50 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat_bold"
+        android:maxLines="1"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Salada de Fruta da manga verde e da maça rosa" />
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/tvDescricaoProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:ellipsize="end"
         android:fontFamily="@font/montserrat"
-        android:textSize="18sp"
+        android:maxLines="1"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvNomeProduto"
         app:layout_constraintTop_toBottomOf="@+id/tvNomeProduto"
-        tools:text="Laranja, manga e uva" />
+        tools:text="@tools:sample/lorem/random" />
 
     <TextView
         android:id="@+id/tvPrecoProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="@font/montserrat"
+        android:textColor="@android:color/holo_green_dark"
         android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvNomeProduto"
         app:layout_constraintTop_toBottomOf="@id/tvDescricaoProduto"
-        tools:text="R$20,00" />
+        tools:text="R$ 20,00" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_margin="8dp"
         android:scaleType="centerCrop"
         app:layout_constraintBottom_toBottomOf="parent"
