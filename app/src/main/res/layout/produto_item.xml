@@ -10,17 +10,20 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:textSize="18sp"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageView"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Salada de Fruta" />
+        tools:text="Salada de Fruta da manga verde e da maça rosa" />
 
     <TextView
         android:id="@+id/tvDescricaoProduto"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvNomeProduto"
@@ -32,6 +35,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:fontFamily="@font/montserrat"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/tvNomeProduto"
