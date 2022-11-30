@@ -1,7 +1,9 @@
 package br.com.jean.orgs.activity
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,10 +24,18 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         configuraRecyclerView()
         configuraFab()
-        setContentView(binding.root)
+
+        val builder = AlertDialog.Builder(this)
+
+        builder.setTitle("Titulo de teste")
+        builder.setMessage("Mensagem de teste")
+        builder.setPositiveButton("Confimar") { _, _ -> }
+        builder.setNegativeButton("Cancelar") { _, _ -> }
+        builder.show()
     }
 
     override fun onResume() {
