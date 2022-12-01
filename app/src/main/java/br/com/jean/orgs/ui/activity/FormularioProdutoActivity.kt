@@ -33,7 +33,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val produtoImagem = binding.activityFormularioProdutoImagem
 
         produtoImagem.setOnClickListener {
-            FormularioImagemDialog(this).mostrar { urlImagem, loader ->
+            FormularioImagemDialog(this).mostrar(url) { urlImagem, loader ->
                 url = urlImagem
                 binding.activityFormularioProdutoImagem.carregarImagem(url, loader)
             }
