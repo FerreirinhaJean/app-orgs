@@ -55,7 +55,17 @@ class ListaProdutosAdapter(
             nomeProduto.text = produto.nome
             descricaoProduto.text = produto.descricao
             precoProduto.text = formataValorBr(produto.valor)
-            imagem.load(produto.urlImagem)
+
+            val visibilidade = if (produto.urlImagem != null)
+                View.VISIBLE
+            else
+                View.GONE
+
+            imagem.visibility = visibilidade
+            imagem.load(produto.urlImagem){
+                fallback(R.drawable.erro)
+                error(R.drawable.erro)
+            }
         }
 
         private fun formataValorBr(valor: BigDecimal): String? {
