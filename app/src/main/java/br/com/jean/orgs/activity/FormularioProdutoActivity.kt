@@ -1,5 +1,6 @@
 package br.com.jean.orgs.activity
 
+import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -10,6 +11,9 @@ import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.databinding.FormularioImagensBinding
 import br.com.jean.orgs.model.Produto
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import com.google.android.material.textfield.TextInputLayout
 import java.math.BigDecimal
@@ -20,13 +24,20 @@ class FormularioProdutoActivity : AppCompatActivity() {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
 
-    private var url: String = ""
-
+    private var url: String? = null
     private val dao = ProdutoDao()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val imageLoader = ImageLoader.Builder(this).components {
+            if (SDK_INT >= 28)
+                add(ImageDecoderDecoder.Factory())
+            else
+                add(GifDecoder.Factory())
+        }.build()
 
         configuraBotaoSalvar()
         val produtoImagem = binding.activityFormularioProdutoImagem
@@ -39,13 +50,13 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
             btCarregar.setOnClickListener {
                 url = etUrl.editText?.text.toString()
-                imagemFormulario.load(url)
+                imagemFormulario.load(url, imageLoader)
             }
 
             val builder = AlertDialog.Builder(this)
             builder.setView(bindingFormularioImagem.root)
             builder.setPositiveButton("Confimar") { _, _ ->
-                binding.activityFormularioProdutoImagem.load(url)
+                binding.activityFormularioProdutoImagem.load(url, imageLoader)
             }
             builder.setNegativeButton("Cancelar") { _, _ -> }
             builder.show()
