@@ -8,7 +8,9 @@ import androidx.appcompat.app.AlertDialog
 import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
+import br.com.jean.orgs.databinding.FormularioImagensBinding
 import br.com.jean.orgs.model.Produto
+import coil.load
 import com.google.android.material.textfield.TextInputLayout
 import java.math.BigDecimal
 
@@ -28,10 +30,20 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val produtoImagem = binding.activityFormularioProdutoImagem
 
         produtoImagem.setOnClickListener {
+            val bindingFormularioImagem = FormularioImagensBinding.inflate(layoutInflater)
+            val btCarregar = bindingFormularioImagem.formularioImagensButtonCarregar
+            val etUrl = bindingFormularioImagem.formularioImagemTextInputLayoutUrl
+            val imagemFormulario = bindingFormularioImagem.formularioImagensImageView
+
+            btCarregar.setOnClickListener {
+                val url = etUrl.editText.toString()
+                imagemFormulario.load(url)
+            }
+
             val builder = AlertDialog.Builder(this)
+            builder.setView(bindingFormularioImagem.root)
             builder.setPositiveButton("Confimar") { _, _ -> }
             builder.setNegativeButton("Cancelar") { _, _ -> }
-            builder.setView(R.layout.formulario_imagens)
             builder.show()
         }
     }
