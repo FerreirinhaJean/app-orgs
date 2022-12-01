@@ -20,6 +20,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
 
+    private var url: String = ""
+
     private val dao = ProdutoDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,13 +38,15 @@ class FormularioProdutoActivity : AppCompatActivity() {
             val imagemFormulario = bindingFormularioImagem.formularioImagensImageView
 
             btCarregar.setOnClickListener {
-                val url = etUrl.editText.toString()
+                url = etUrl.editText?.text.toString()
                 imagemFormulario.load(url)
             }
 
             val builder = AlertDialog.Builder(this)
             builder.setView(bindingFormularioImagem.root)
-            builder.setPositiveButton("Confimar") { _, _ -> }
+            builder.setPositiveButton("Confimar") { _, _ ->
+                binding.activityFormularioProdutoImagem.load(url)
+            }
             builder.setNegativeButton("Cancelar") { _, _ -> }
             builder.show()
         }
@@ -78,7 +82,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
         val produto = Produto(
             nome = nome,
             descricao = descricao,
-            valor = valor
+            valor = valor,
+            urlImagem = url
         )
         return produto
     }

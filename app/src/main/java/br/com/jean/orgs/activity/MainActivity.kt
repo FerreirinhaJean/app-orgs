@@ -1,17 +1,13 @@
 package br.com.jean.orgs.activity
 
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 

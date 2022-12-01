@@ -55,7 +55,7 @@ class ListaProdutosAdapter(
             nomeProduto.text = produto.nome
             descricaoProduto.text = produto.descricao
             precoProduto.text = formataValorBr(produto.valor)
-            imagem.load("https://s2.glbimg.com/rl2qA0jqm8CYvBh7ZTnAu8NG6ds=/0x0:1999x3000/924x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_b58693ed41d04a39826739159bf600a0/internal_photos/bs/2021/N/1/8FdLsPS2G4uiUV4a8MOg/abacaxi.jpg")
+            imagem.load(produto.urlImagem)
         }
 
         private fun formataValorBr(valor: BigDecimal): String? {
