@@ -1,6 +1,7 @@
 package br.com.jean.orgs.ui.recyclerview.adapter
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.R
 import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.databinding.ProdutoItemBinding
+import br.com.jean.orgs.extensions.carregarImagem
 import br.com.jean.orgs.model.Produto
+import coil.ImageLoader
+import coil.decode.GifDecoder
+import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -62,7 +67,7 @@ class ListaProdutosAdapter(
                 View.GONE
 
             imagem.visibility = visibilidade
-            imagem.load(produto.urlImagem){
+            imagem.load(produto.urlImagem) {
                 fallback(R.drawable.erro)
                 error(R.drawable.erro)
             }

@@ -10,6 +10,7 @@ import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.databinding.FormularioImagensBinding
+import br.com.jean.orgs.extensions.carregarImagem
 import br.com.jean.orgs.model.Produto
 import coil.ImageLoader
 import coil.decode.GifDecoder
@@ -49,21 +50,13 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
             btCarregar.setOnClickListener {
                 url = etUrl.editText?.text.toString()
-                imagemFormulario.load(url, imageLoader) {
-                    fallback(R.drawable.erro)
-                    error(R.drawable.erro)
-                    placeholder(R.drawable.imagem_padrao)
-                }
+                imagemFormulario.carregarImagem(url, imageLoader)
             }
 
             val builder = AlertDialog.Builder(this)
             builder.setView(bindingFormularioImagem.root)
             builder.setPositiveButton("Confimar") { _, _ ->
-                binding.activityFormularioProdutoImagem.load(url, imageLoader){
-                    fallback(R.drawable.erro)
-                    error(R.drawable.erro)
-                    placeholder(R.drawable.imagem_padrao)
-                }
+                binding.activityFormularioProdutoImagem.carregarImagem(url, imageLoader)
             }
             builder.setNegativeButton("Cancelar") { _, _ -> }
             builder.show()
