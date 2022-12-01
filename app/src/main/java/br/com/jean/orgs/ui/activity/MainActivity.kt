@@ -1,4 +1,4 @@
-package br.com.jean.orgs.activity
+package br.com.jean.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle

@@ -1,21 +1,18 @@
-package br.com.jean.orgs.activity
+package br.com.jean.orgs.ui.activity
 
 import android.os.Build.VERSION.SDK_INT
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
-import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.databinding.FormularioImagensBinding
 import br.com.jean.orgs.extensions.carregarImagem
 import br.com.jean.orgs.model.Produto
+import br.com.jean.orgs.ui.dialog.FormularioImagemDialog
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
-import coil.load
 import com.google.android.material.textfield.TextInputLayout
 import java.math.BigDecimal
 
@@ -32,34 +29,14 @@ class FormularioProdutoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val imageLoader = ImageLoader.Builder(this).components {
-            if (SDK_INT >= 28)
-                add(ImageDecoderDecoder.Factory())
-            else
-                add(GifDecoder.Factory())
-        }.build()
-
         configuraBotaoSalvar()
         val produtoImagem = binding.activityFormularioProdutoImagem
 
         produtoImagem.setOnClickListener {
-            val bindingFormularioImagem = FormularioImagensBinding.inflate(layoutInflater)
-            val btCarregar = bindingFormularioImagem.formularioImagensButtonCarregar
-            val etUrl = bindingFormularioImagem.formularioImagemTextInputLayoutUrl
-            val imagemFormulario = bindingFormularioImagem.formularioImagensImageView
-
-            btCarregar.setOnClickListener {
-                url = etUrl.editText?.text.toString()
-                imagemFormulario.carregarImagem(url, imageLoader)
+            FormularioImagemDialog(this).mostrar { urlImagem, loader ->
+                url = urlImagem
+                binding.activityFormularioProdutoImagem.carregarImagem(url, loader)
             }
-
-            val builder = AlertDialog.Builder(this)
-            builder.setView(bindingFormularioImagem.root)
-            builder.setPositiveButton("Confimar") { _, _ ->
-                binding.activityFormularioProdutoImagem.carregarImagem(url, imageLoader)
-            }
-            builder.setNegativeButton("Cancelar") { _, _ -> }
-            builder.show()
         }
     }
 
