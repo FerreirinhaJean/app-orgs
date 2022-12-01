@@ -28,14 +28,6 @@ class MainActivity : AppCompatActivity() {
 
         configuraRecyclerView()
         configuraFab()
-
-        val builder = AlertDialog.Builder(this)
-
-        builder.setTitle("Titulo de teste")
-        builder.setMessage("Mensagem de teste")
-        builder.setPositiveButton("Confimar") { _, _ -> }
-        builder.setNegativeButton("Cancelar") { _, _ -> }
-        builder.show()
     }
 
     override fun onResume() {

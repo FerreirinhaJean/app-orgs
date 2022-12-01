@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AlertDialog
 import br.com.jean.orgs.R
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
@@ -16,13 +17,23 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
+
     private val dao = ProdutoDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(binding.root)
 
         configuraBotaoSalvar()
-        setContentView(binding.root)
+        val produtoImagem = binding.activityFormularioProdutoImagem
+
+        produtoImagem.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            builder.setPositiveButton("Confimar") { _, _ -> }
+            builder.setNegativeButton("Cancelar") { _, _ -> }
+            builder.setView(R.layout.formulario_imagens)
+            builder.show()
+        }
     }
 
     private fun configuraBotaoSalvar() {
