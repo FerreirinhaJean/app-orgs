@@ -35,6 +35,9 @@ class MainActivity : AppCompatActivity() {
         val rvListaProdutos: RecyclerView = binding.rvListaProdutos
         rvListaProdutos.adapter = adapter
         rvListaProdutos.layoutManager = LinearLayoutManager(this)
+        
+        rvListaProdutos.addOnItemTouchListener{}
+        
     }
 
     private fun configuraFab() {
@@ -45,5 +48,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+}
+
+private fun RecyclerView.addOnItemTouchListener(function: () -> Unit) {
 
 }

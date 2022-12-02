@@ -1,18 +1,12 @@
 package br.com.jean.orgs.ui.activity
 
-import android.os.Build.VERSION.SDK_INT
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import br.com.jean.orgs.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
-import br.com.jean.orgs.databinding.FormularioImagensBinding
 import br.com.jean.orgs.extensions.carregarImagem
 import br.com.jean.orgs.model.Produto
 import br.com.jean.orgs.ui.dialog.FormularioImagemDialog
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import com.google.android.material.textfield.TextInputLayout
 import java.math.BigDecimal
 

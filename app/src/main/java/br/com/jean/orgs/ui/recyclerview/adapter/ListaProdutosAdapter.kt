@@ -1,20 +1,13 @@
 package br.com.jean.orgs.ui.recyclerview.adapter
 
 import android.content.Context
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.R
-import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.databinding.ProdutoItemBinding
-import br.com.jean.orgs.extensions.carregarImagem
 import br.com.jean.orgs.model.Produto
-import coil.ImageLoader
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
 import coil.load
 import java.math.BigDecimal
 import java.text.NumberFormat
@@ -47,7 +40,7 @@ class ListaProdutosAdapter(
         notifyDataSetChanged()
     }
 
-    class MyViewHolder(
+    inner class MyViewHolder(
         binding: ProdutoItemBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
