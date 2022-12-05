@@ -9,10 +9,8 @@ import br.com.jean.orgs.model.Produto
 interface ProdutoDao {
 
     @Query("SELECT * FROM produto")
-    fun buscaTodos()
+    fun buscaTodos() : List<Produto>
 
     @Insert
     fun salvar(produto: Produto)
-
-
 }
