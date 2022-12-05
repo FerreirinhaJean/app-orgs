@@ -2,13 +2,11 @@ package br.com.jean.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import br.com.jean.orgs.dao.ProdutosDao
 import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
-import br.com.jean.orgs.dao.ProdutosDao
 
 class MainActivity : AppCompatActivity() {
 
