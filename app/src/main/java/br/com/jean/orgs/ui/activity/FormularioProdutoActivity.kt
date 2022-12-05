@@ -2,7 +2,6 @@ package br.com.jean.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.jean.orgs.dao.ProdutosDao
 import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.extensions.tentaCarregarImagem
@@ -18,7 +17,6 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private var url: String? = null
-    private val dao = ProdutosDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
