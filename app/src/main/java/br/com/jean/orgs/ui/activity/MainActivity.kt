@@ -4,9 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import br.com.jean.orgs.dao.ProdutosDao
+import br.com.jean.orgs.database.AppDatabase
+import br.com.jean.orgs.database.dao.ProdutoDao
 import br.com.jean.orgs.databinding.ActivityMainBinding
+import br.com.jean.orgs.model.Produto
 import br.com.jean.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
+import java.math.BigDecimal
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +30,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        adapter.atualiza(dao.buscaTodos())
+        val db = AppDatabase.getInstance(this)
+        adapter.atualiza(db.produtoDao().buscaTodos())
     }
 
     private fun configuraRecyclerView() {

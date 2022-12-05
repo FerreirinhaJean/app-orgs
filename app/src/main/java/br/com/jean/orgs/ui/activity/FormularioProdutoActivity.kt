@@ -3,6 +3,7 @@ package br.com.jean.orgs.ui.activity
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import br.com.jean.orgs.dao.ProdutosDao
+import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.extensions.tentaCarregarImagem
 import br.com.jean.orgs.model.Produto
@@ -24,7 +25,6 @@ class FormularioProdutoActivity : AppCompatActivity() {
         setContentView(binding.root)
         title = "Cadastrar Produto"
 
-
         configuraBotaoSalvar()
         val produtoImagem = binding.activityFormularioProdutoImagem
 
@@ -44,7 +44,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
-            dao.adiciona(produto)
+            val db = AppDatabase.getInstance(this)
+            db.produtoDao().salvar(produto)
             finish()
         }
     }
