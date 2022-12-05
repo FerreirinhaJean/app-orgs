@@ -5,7 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import br.com.jean.orgs.databinding.FormularioImagensBinding
-import br.com.jean.orgs.extensions.carregarImagem
+import br.com.jean.orgs.extensions.tentaCarregarImagem
 import coil.ImageLoader
 import coil.decode.GifDecoder
 import coil.decode.ImageDecoderDecoder
@@ -27,7 +27,7 @@ class FormularioImagemDialog(
     ) {
         FormularioImagensBinding.inflate(LayoutInflater.from(context)).apply {
             urlPadrao?.let {
-                formularioImagensImageView.carregarImagem(it, imageLoader)
+                formularioImagensImageView.tentaCarregarImagem(it)
                 formularioImagemTextInputLayoutUrl.editText?.setText(it)
             }
 
@@ -37,7 +37,7 @@ class FormularioImagemDialog(
 
             btCarregar.setOnClickListener {
                 val url = etUrl.editText?.text.toString()
-                imagemFormulario.carregarImagem(url, imageLoader)
+                imagemFormulario.tentaCarregarImagem(url)
             }
 
             val builder = AlertDialog.Builder(context)

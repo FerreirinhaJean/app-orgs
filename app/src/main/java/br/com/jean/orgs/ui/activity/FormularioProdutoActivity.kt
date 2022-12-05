@@ -2,9 +2,9 @@ package br.com.jean.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.jean.orgs.dao.ProdutoDao
+import br.com.jean.orgs.dao.ProdutosDao
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
-import br.com.jean.orgs.extensions.carregarImagem
+import br.com.jean.orgs.extensions.tentaCarregarImagem
 import br.com.jean.orgs.model.Produto
 import br.com.jean.orgs.ui.dialog.FormularioImagemDialog
 import com.google.android.material.textfield.TextInputLayout
@@ -17,7 +17,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private var url: String? = null
-    private val dao = ProdutoDao()
+    private val dao = ProdutosDao()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         produtoImagem.setOnClickListener {
             FormularioImagemDialog(this).mostrar(url) { urlImagem, loader ->
                 url = urlImagem
-                binding.activityFormularioProdutoImagem.carregarImagem(url, loader)
+                binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
             }
         }
     }
@@ -44,7 +44,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
-            dao.adicionar(produto)
+            dao.adiciona(produto)
             finish()
         }
     }
