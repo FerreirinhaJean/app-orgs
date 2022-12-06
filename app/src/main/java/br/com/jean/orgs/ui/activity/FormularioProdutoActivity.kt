@@ -16,7 +16,12 @@ class FormularioProdutoActivity : AppCompatActivity() {
         ActivityFormularioProdutoBinding.inflate(layoutInflater)
     }
 
+    private val produtoDao by lazy {
+        AppDatabase.getInstance(this).produtoDao()
+    }
+
     private var url: String? = null
+    private var idProduto = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +37,32 @@ class FormularioProdutoActivity : AppCompatActivity() {
                 binding.activityFormularioProdutoImagem.tentaCarregarImagem(url)
             }
         }
+
+        tentaCarregarProduto()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        produtoDao.buscarPorId(idProduto)?.let {
+            preencheCampos(it)
+        }
+    }
+
+    private fun tentaCarregarProduto() {
+        idProduto = intent.getLongExtra(CHAVE_ID_PRODUTO, 0L)
+    }
+
+    private fun preencheCampos(produto: Produto) {
+        title = "Atualizar Produto"
+        url = produto.urlImagem
+        binding.activityFormularioProdutoNome.editText
+            ?.setText(produto.nome)
+        binding.activityFormularioProdutoDescricao.editText
+            ?.setText(produto.descricao)
+        binding.activityFormularioProdutoPreco.editText
+            ?.setText(produto.valor.toPlainString())
+        binding.activityFormularioProdutoImagem.tentaCarregarImagem(produto.urlImagem)
     }
 
     private fun configuraBotaoSalvar() {
@@ -42,8 +73,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
-            val db = AppDatabase.getInstance(this)
-            db.produtoDao().salvar(produto)
+            produtoDao.salvar(produto)
             finish()
         }
     }
@@ -63,6 +93,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
             BigDecimal(preco)
 
         val produto = Produto(
+            id = idProduto,
             nome = nome,
             descricao = descricao,
             valor = valor,

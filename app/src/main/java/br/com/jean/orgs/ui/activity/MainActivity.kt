@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         adapter.quandoClicaNoItem = {
             val intent = Intent(this, DetalhesProdutoActivity::class.java)
                 .putExtra(
-                    CHAVE_PRODUTO,
-                    it
+                    CHAVE_ID_PRODUTO,
+                    it.id
                 )
 
             startActivity(intent)
