@@ -8,6 +8,11 @@ import br.com.jean.orgs.extensions.tentaCarregarImagem
 import br.com.jean.orgs.model.Produto
 import br.com.jean.orgs.ui.dialog.FormularioImagemDialog
 import com.google.android.material.textfield.TextInputLayout
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.math.BigDecimal
 
 class FormularioProdutoActivity : AppCompatActivity() {
@@ -19,6 +24,8 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val produtoDao by lazy {
         AppDatabase.getInstance(this).produtoDao()
     }
+
+    private val scope = CoroutineScope(IO)
 
     private var url: String? = null
     private var idProduto = 0L
@@ -43,9 +50,13 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
-        produtoDao.buscarPorId(idProduto)?.let {
-            preencheCampos(it)
+        scope.launch {
+            produtoDao.buscarPorId(idProduto)?.let {
+                title = "Atualizar Produto"
+                withContext(Dispatchers.Main) {
+                    preencheCampos(it)
+                }
+            }
         }
     }
 
@@ -54,7 +65,6 @@ class FormularioProdutoActivity : AppCompatActivity() {
     }
 
     private fun preencheCampos(produto: Produto) {
-        title = "Atualizar Produto"
         url = produto.urlImagem
         binding.activityFormularioProdutoNome.editText
             ?.setText(produto.nome)
@@ -73,8 +83,11 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
-            produtoDao.salvar(produto)
-            finish()
+
+            scope.launch {
+                produtoDao.salvar(produto)
+                finish()
+            }
         }
     }
 

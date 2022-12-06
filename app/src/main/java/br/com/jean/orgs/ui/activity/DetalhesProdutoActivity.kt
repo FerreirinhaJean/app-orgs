@@ -13,6 +13,12 @@ import br.com.jean.orgs.databinding.ActivityDetalhesProdutoBinding
 import br.com.jean.orgs.extensions.formataParaMoedaBrasileira
 import br.com.jean.orgs.extensions.tentaCarregarImagem
 import br.com.jean.orgs.model.Produto
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetalhesProdutoActivity : AppCompatActivity() {
 
@@ -22,6 +28,8 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     private val produtoDao by lazy {
         AppDatabase.getInstance(this).produtoDao()
     }
+
+    private val scope = CoroutineScope(IO)
 
     private var produto: Produto? = null
     private var id: Long = 0L
@@ -40,10 +48,14 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        produto = produtoDao.buscarPorId(id)
-        produto?.let {
-            preencheCampos(it)
-        } ?: finish()
+        scope.launch {
+            produto = produtoDao.buscarPorId(id)
+            withContext(Main) {
+                produto?.let {
+                    preencheCampos(it)
+                } ?: finish()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,8 +72,10 @@ class DetalhesProdutoActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.menu_detalhes_produto_remover -> {
-                produto?.let { produtoDao.deletar(it) }
-                finish()
+                scope.launch {
+                    produto?.let { produtoDao.deletar(it) }
+                    finish()
+                }
             }
         }
 

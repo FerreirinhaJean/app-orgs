@@ -14,16 +14,6 @@ import br.com.jean.orgs.model.Produto
 abstract class AppDatabase : RoomDatabase() {
     abstract fun produtoDao(): ProdutoDao
 
-//    companion object {
-//        fun getInstance(context: Context): AppDatabase {
-//            return Room.databaseBuilder(
-//                context,
-//                AppDatabase::class.java,
-//                "orgs.db"
-//            ).allowMainThreadQueries().build()
-//        }
-//    }
-
     companion object {
         @Volatile
         private lateinit var db: AppDatabase
@@ -34,10 +24,9 @@ abstract class AppDatabase : RoomDatabase() {
                 context,
                 AppDatabase::class.java,
                 "orgs.db"
-            ).allowMainThreadQueries()
-                .build().also {
-                    db = it
-                }
+            ).build().also {
+                db = it
+            }
         }
     }
 

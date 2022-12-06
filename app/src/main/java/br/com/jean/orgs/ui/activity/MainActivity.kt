@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityMainBinding
 import br.com.jean.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +26,14 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         val db = AppDatabase.getInstance(this)
-        adapter.atualiza(db.produtoDao().buscaTodos())
+
+        val scope = MainScope()
+        scope.launch {
+            val produtos = withContext(Dispatchers.IO) {
+                db.produtoDao().buscaTodos()
+            }
+            adapter.atualiza(produtos)
+        }
     }
 
     private fun configuraRecyclerView() {
