@@ -2,6 +2,7 @@ package br.com.jean.orgs.ui.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityFormularioProdutoBinding
 import br.com.jean.orgs.extensions.tentaCarregarImagem
@@ -24,8 +25,6 @@ class FormularioProdutoActivity : AppCompatActivity() {
     private val produtoDao by lazy {
         AppDatabase.getInstance(this).produtoDao()
     }
-
-    private val scope = CoroutineScope(IO)
 
     private var url: String? = null
     private var idProduto = 0L
@@ -50,7 +49,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        scope.launch {
+        lifecycleScope.launch {
             produtoDao.buscarPorId(idProduto)?.let {
                 title = "Atualizar Produto"
                 withContext(Dispatchers.Main) {
@@ -84,7 +83,7 @@ class FormularioProdutoActivity : AppCompatActivity() {
         btSalvar.setOnClickListener {
             val produto = criaProduto(etNomeProduto, etDescricaoProduto, etPrecoProduto)
 
-            scope.launch {
+            lifecycleScope.launch {
                 produtoDao.salvar(produto)
                 finish()
             }

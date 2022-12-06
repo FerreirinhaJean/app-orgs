@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import androidx.lifecycle.lifecycleScope
 import br.com.jean.orgs.R
 import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityDetalhesProdutoBinding
@@ -28,16 +29,12 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     private val produtoDao by lazy {
         AppDatabase.getInstance(this).produtoDao()
     }
-
-    private val scope = CoroutineScope(IO)
-
     private var produto: Produto? = null
     private var id: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-
         tentaCarregarProduto()
     }
 
@@ -48,13 +45,11 @@ class DetalhesProdutoActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        scope.launch {
+        lifecycleScope.launch {
             produto = produtoDao.buscarPorId(id)
-            withContext(Main) {
-                produto?.let {
-                    preencheCampos(it)
-                } ?: finish()
-            }
+            produto?.let {
+                preencheCampos(it)
+            } ?: finish()
         }
     }
 
@@ -72,7 +67,7 @@ class DetalhesProdutoActivity : AppCompatActivity() {
                 startActivity(intent)
             }
             R.id.menu_detalhes_produto_remover -> {
-                scope.launch {
+                lifecycleScope.launch {
                     produto?.let { produtoDao.deletar(it) }
                     finish()
                 }

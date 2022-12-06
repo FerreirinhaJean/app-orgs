@@ -4,9 +4,12 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.database.AppDatabase
 import br.com.jean.orgs.databinding.ActivityMainBinding
+import br.com.jean.orgs.model.Produto
 import br.com.jean.orgs.ui.recyclerview.adapter.ListaProdutosAdapter
 import kotlinx.coroutines.*
 
@@ -16,13 +19,14 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val adapter = ListaProdutosAdapter(this)
-    private val scope = CoroutineScope(Dispatchers.Main)
-
     private val handlerException by lazy {
         CoroutineExceptionHandler { coroutineContext, throwable ->
-            Toast.makeText(this@MainActivity, "Deu erro", Toast.LENGTH_LONG)
-                .show()
+            Toast.makeText(this@MainActivity, "Deu erro", Toast.LENGTH_LONG).show()
         }
+    }
+
+    private val produtoDao by lazy {
+        AppDatabase.getInstance(this).produtoDao()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,12 +38,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        val db = AppDatabase.getInstance(this)
 
-        scope.launch(handlerException) {
-            val produtos = withContext(Dispatchers.IO) {
-                db.produtoDao().buscaTodos()
-            }
+        lifecycleScope.launch(handlerException) {
+            val produtos = produtoDao.buscaTodos()
             adapter.atualiza(produtos)
         }
     }
@@ -48,11 +49,9 @@ class MainActivity : AppCompatActivity() {
         val rvListaProdutos: RecyclerView = binding.rvListaProdutos
         rvListaProdutos.adapter = adapter
         adapter.quandoClicaNoItem = {
-            val intent = Intent(this, DetalhesProdutoActivity::class.java)
-                .putExtra(
-                    CHAVE_ID_PRODUTO,
-                    it.id
-                )
+            val intent = Intent(this, DetalhesProdutoActivity::class.java).putExtra(
+                CHAVE_ID_PRODUTO, it.id
+            )
 
             startActivity(intent)
         }
@@ -65,5 +64,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 }
