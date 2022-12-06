@@ -44,6 +44,7 @@ dependencies {
     def room_version = "2.4.1"
     def lifecycle_version = "2.5.0-alpha02"
 
+    kapt "org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.5.0" //Solução alternativa para versão 2.4.1 do Room para utilizar com coroutines
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
