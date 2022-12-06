@@ -2,6 +2,7 @@ package br.com.jean.orgs.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import br.com.jean.orgs.database.AppDatabase
@@ -15,6 +16,14 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val adapter = ListaProdutosAdapter(this)
+    private val scope = CoroutineScope(Dispatchers.Main)
+
+    private val handlerException by lazy {
+        CoroutineExceptionHandler { coroutineContext, throwable ->
+            Toast.makeText(this@MainActivity, "Deu erro", Toast.LENGTH_LONG)
+                .show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +36,7 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val db = AppDatabase.getInstance(this)
 
-        val scope = MainScope()
-        scope.launch {
+        scope.launch(handlerException) {
             val produtos = withContext(Dispatchers.IO) {
                 db.produtoDao().buscaTodos()
             }
@@ -57,6 +65,5 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
-
 
 }
